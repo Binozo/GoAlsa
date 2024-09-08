@@ -1,5 +1,10 @@
 package alsa
 
+/*
+#cgo pkg-config: alsa
+#include <alsa/asoundlib.h>
+*/
+import "C"
 import "errors"
 
 var (
@@ -12,3 +17,7 @@ var (
 	ErrReadError   = errors.New("could not read")
 	ErrWriteError  = errors.New("could not write")
 )
+
+func GetErrorMessage(errorcode int) string {
+	return C.GoString(C.snd_strerror(C.int(errorcode)))
+}
