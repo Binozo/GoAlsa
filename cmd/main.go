@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/Binozo/GoAlsa/pkg/alsa"
 )
 
@@ -15,5 +14,4 @@ func main() {
 		panic(err)
 	}
 	defer device.Close()
-	fmt.Println(device.GetConfig())
 }

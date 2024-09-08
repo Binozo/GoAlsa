@@ -9,6 +9,7 @@ import "C"
 import (
 	"errors"
 	"fmt"
+	"github.com/Binozo/GoAlsa/internal"
 	"reflect"
 	"unsafe"
 )
@@ -44,4 +45,10 @@ func (p *PlaybackDevice) Write(buffer []float32) (samples int, err error) {
 	}
 
 	return int(writeResult) * p.AudioConfig.Channels, nil
+}
+
+func (p *PlaybackDevice) WriteBytes(buffer []byte) (samples int, err error) {
+	buf := internal.ConvertBytesToFloats(buffer)
+	written, err := p.Write(buf)
+	return written * 4, err
 }
