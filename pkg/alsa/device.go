@@ -16,7 +16,6 @@ import (
 import "C"
 
 type Device interface {
-	GetConfig() Config
 	Close()
 }
 
@@ -25,10 +24,6 @@ type defaultDevice struct {
 	pcmDevice    *C.snd_pcm_t
 	frames       int
 	bufferParams BufferParams
-}
-
-func (d *defaultDevice) GetConfig() Config {
-	return d.AudioConfig
 }
 
 func (d *defaultDevice) Close() {
