@@ -40,8 +40,8 @@ func (p *PlaybackDevice) Write(buffer []float32) (samples int, err error) {
 	if writeResult == -C.EPIPE {
 		C.snd_pcm_prepare(p.pcmDevice)
 		return 0, ErrUnderrun
-	} else if writeResult < 0 {
-		return 0, errors.Join(ErrWriteError, fmt.Errorf("could not write: %d (%s)", int(writeResult), GetErrorMessage(writeResult)))
+	} else if int(writeResult) < 0 {
+		return 0, errors.Join(ErrWriteError, fmt.Errorf("could not write: %d (%s)", int(writeResult), GetErrorMessage(int(writeResult))))
 	}
 
 	return int(writeResult) * p.AudioConfig.Channels, nil
