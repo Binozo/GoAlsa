@@ -44,7 +44,7 @@ func (c *CaptureDevice) Read(buffer []float32) (read int, err error) {
 		C.snd_pcm_prepare(c.pcmDevice)
 		return 0, ErrOverrun
 	} else if readResult < 0 {
-		return 0, errors.Join(ErrReadError, fmt.Errorf("could not read: %d", int(readResult)))
+		return 0, errors.Join(ErrReadError, fmt.Errorf("could not read: %d (%s)", int(readResult), GetErrorMessage(readResult)))
 	}
 	return int(readResult) * c.AudioConfig.Channels, nil
 }
