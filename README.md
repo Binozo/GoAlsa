@@ -1,4 +1,4 @@
-# GoTinyAlsa 🎵
+# GoAlsa 🎵
 
 Go bindings for [ALSA](https://www.alsa-project.org)
 
@@ -24,4 +24,3 @@ $ go get -u github.com/Binozo/GoAlsa
 ```
 
 ## Quickstart 💫
-TODO
