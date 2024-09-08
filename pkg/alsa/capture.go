@@ -2,6 +2,7 @@ package alsa
 
 import (
 	"errors"
+	"github.com/Binozo/GoAlsa/internal"
 	"reflect"
 	"unsafe"
 )
@@ -46,4 +47,14 @@ func (c *CaptureDevice) Read(buffer []float32) (read int, err error) {
 		return 0, errors.Join(ErrReadError, fmt.Errorf("could not read: %d", int(readResult)))
 	}
 	return int(readResult) * c.AudioConfig.Channels, nil
+}
+
+func (c *CaptureDevice) ReadBytes(buffer []byte) (read int, err error) {
+	buf := make([]float32, len(buffer)/4)
+	bufRead, err := c.Read(buf)
+	if err != nil {
+		return 0, err
+	}
+	buffer = internal.ConvertFloatsToBytes(buf[0:bufRead])
+	return len(buffer), nil
 }
